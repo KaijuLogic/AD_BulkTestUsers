@@ -80,19 +80,19 @@
 [CmdletBinding(SupportsShouldProcess)]
 Param(
 	[Parameter(Mandatory=$False)]
-	[String]$GivenNames = "$PSScriptRoot\Resources\given-names.txt",
+	[String]$GivenNames = ".\Resources\given-names.txt",
 
 	[Parameter(Mandatory=$False)]
-	[String]$FamilyNames = "$PSScriptRoot\Resources\family-names.txt",
+	[String]$FamilyNames = ".\Resources\family-names.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$Roles = "$PSScriptRoot\Resources\roles.txt",
+	[String]$Roles = ".\Resources\roles.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$DestinationOUList = "$PSScriptRoot\Resources\Dest-OUs.txt",
+	[String]$DestinationOUList = ".\Resources\Dest-OUs.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$DepartmentList = "$PSScriptRoot\Resources\DepartmentList.txt",
+	[String]$DepartmentList = ".\Resources\DepartmentList.txt",
 
     [Parameter(Mandatory=$false)]
     [ValidateRange(1, 100)]
