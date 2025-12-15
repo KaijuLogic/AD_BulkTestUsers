@@ -5,6 +5,11 @@ This PowerShell script automates the creation of bulk user accounts within an Ac
 
 **The script is intended strictly for testing and lab environments to simulate user population and management.**
 
+## FEATURES
+* Logs are created so you can go back and see which users were created, what role they were given, and what OU they were placed in.
+* Supports -whatif
+* f
+
 ## Prerequisites
 * **Active Directory PowerShell Module** (RSAT) must be installed or this should be run on a server with AD installed.
 * Permissions to create users and modify group memberships in the target Active Directory domain.
@@ -15,7 +20,7 @@ The script is bundled with several text files to generate random user data. By d
 * `given-names.txt`: A list of 300 given (first) names.
 * `family-names.txt`: A list of 300 family (last) names.
 * `roles.txt`: A list of existing Security Groups to add users to.
-* `Dest-OUs.txt`: List of target Distinguished Names for OUs (e.g., OU=TestUsers,DC=testnet,DC=lab).
+* `Dest-OUs.txt`: List of target Distinguished Names for a pool of OUs to use (e.g., OU=TestUsers,DC=testnet,DC=lab).
 * `DepartmentList.txt`: A list of department names.
 
 You can also provide custom paths to these files using script parameters if they are not located in the script root directory.
@@ -52,8 +57,8 @@ AD-BulkTestUsers.ps1 -usercount 50 -DestinationOUList C:\Script\Your-OU-List.txt
 
 The script will also generate run logs that you can review later.
 
-* `Location`: `\BulkUsersLogs\RunLogs\YYYY-MM\` within the script directory.
-* `Format`: `BulkUsers_RunLog_YYYY-MM-dd_HH.mm.ss.txt`.
+* **Location**: `\BulkUsersLogs\RunLogs\YYYY-MM\` within the script directory.
+* **Format**: `BulkUsers_RunLog_YYYY-MM-dd_HH.mm.ss.txt`.
 
 ## Disclaimer
 

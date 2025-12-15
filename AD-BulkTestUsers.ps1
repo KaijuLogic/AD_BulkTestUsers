@@ -224,7 +224,7 @@ Function Start-BulkUsersCreation{
         GivenName = $UserFirstName
         Surname = $UserLastName
         Enabled = $True
-        Description = "User created with AD-BulkUser Script $($CurrentDate.ToString("yyyy-MM-dd"))"
+        Description = "User created with AD-BulkUser Script $($CurrentDate.ToString("yyyy-MM-dd"))."
         DisplayName = $DisplayName
         Department = $Department
         Path = $DestinationOU
@@ -232,20 +232,20 @@ Function Start-BulkUsersCreation{
         ChangePasswordAtLogon = $True
     }
     Write-verbose "Creating $UserName"
-    if ($PSCmdlet.ShouldProcess("User creation operation for $UserName @ $DestinationOU, dept:$Department, role:$UserRole")) {
+    if ($PSCmdlet.ShouldProcess("User creation operation for $UserName @ $DestinationOU, dept:$Department, role:$UserRole.")) {
         try{
             New-ADUser @UserParams
-            Write-ScriptLog -level INFO -Message "[$UserFirstName $UserLastName] created in $DestinationOU, with the role $UserRole" -logfile $RunLogOutput
+            Write-ScriptLog -level INFO -Message "[$UserFirstName $UserLastName] created in $DestinationOU, with the role $UserRole." -logfile $RunLogOutput
         }
         Catch{
-            Write-ScriptLog -level ERROR -Message "Something went wrong creating $UserName : $_" -logfile $RunLogOutput
+            Write-ScriptLog -level ERROR -Message "Something went wrong creating $UserName : $_." -logfile $RunLogOutput
         }
         try{
             Write-verbose "Adding $UserName to $UserRole"
             add-adgroupmember -Identity $UserRole -members $UserName
         }
         catch{
-            Write-ScriptLog -level ERROR -Message "Something went wrong adding $UserName to $UserRole $_" -logfile $RunLogOutput
+            Write-ScriptLog -level ERROR -Message "Something went wrong adding $UserName to $UserRole $_." -logfile $RunLogOutput
 
         }
     }
@@ -256,15 +256,15 @@ Function Start-BulkUsersCreation{
 #################################### EXECUTION #######################################
 Set-NewFolder $RunLogDir
 
-Write-ScriptLog -level INFO -message "Bulk test user creation run by $ENV:UserName on $ENV:ComputerName" -logfile $RunLogOutput
+Write-ScriptLog -level INFO -message "Bulk test user creation run by $ENV:UserName on $ENV:ComputerName." -logfile $RunLogOutput
 Write-ScriptLog -level INFO -message "$UserCount random users will be created on this run." -logfile $RunLogOutput
 
 $CheckFiles = $GivenNames,$FamilyNames,$Roles,$DestinationOUList,$DepartmentList
 
 foreach ($file in $CheckFiles){
     if (-not(Test-Path $file -PathType leaf)){
-        Write-ScriptLog -level ERROR -message "$file not found, please verify the path and file exists: $_" -logfile $RunLogOutput
-        Throw "$file not found, please verify the path and file exists: $_"
+        Write-ScriptLog -level ERROR -message "$file not found, please verify the path and file exists: $_." -logfile $RunLogOutput
+        Throw "$file not found, please verify the path and file exists: $_."
     }
 }
 
@@ -279,8 +279,8 @@ Try{
     Write-Verbose "Files read successfully."
 }
 catch{
-    Write-ScriptLog -level ERROR -Message "Something went wrong reading the file $_" -logfile $RunLogOutput
-    Throw "Something went wrong reading a file $_"
+    Write-ScriptLog -level ERROR -Message "Something went wrong reading the file $_." -logfile $RunLogOutput
+    Throw "Something went wrong reading a file $_."
 }
 
 
