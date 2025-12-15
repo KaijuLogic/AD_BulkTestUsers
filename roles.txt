@@ -1,6 +1,5 @@
-Server Operators
-Backup Operators
-Account Operators
-IT-Users
-HR-Users
+IT-Admins
+HR-Team
 Engineering
+Management
+TechWriters

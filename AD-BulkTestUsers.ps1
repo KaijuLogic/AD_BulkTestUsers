@@ -3,18 +3,18 @@
     Simple script that can be used to create bulk Active Directory accounts. I find this helpful for testing Active Directory management in my labs.
 
     .DESCRIPTION
-    This script can be used in a lab setting to create bulk random users in your Active Directory instance. 
-    The script will create a user with a random first and last name, add them to a random OU from a list, add them to random security groups
-    from a list of groups and assign them to a random department. 
+    This PowerShell script automates the creation of bulk test user accounts within an Active Directory lab environment.
+    It generates users with random attributes selected from provided lists, including first and last names, Organizational Units (OUs),
+    security groups, and departments.
 
     Several files are provided:
-    - given-names.txt : List of 300 random given names
-    - family-names.txt : List of 300 random family names
-    - roles.txt : template for adding groups you want to use
-    - Dest-OUs.txt : list of OUs that should be used e.g. OU=TestUsers,DC=testnet,DC=lab
-    - DepartmentList.txt : list of department names you can randomly assign to users
+    - given-names.txt :  A list of 300 given (first) names.
+    - family-names.txt : A list of 300 family (last) names
+    - roles.txt : A list of existing Security Groups to add users to.
+    - Dest-OUs.txt : List of target Distinguished Names for OUs (e.g., OU=TestUsers,DC=testnet,DC=lab).
+    - DepartmentList.txt : A list of department names.
 
-    This script is intended to be run within lab environments. 
+    The script is intended strictly for testing and lab environments to simulate user population and management. PLEASE DO NOT USE THIS IN A LIVE ENVIRONMENT
 
     .PARAMETER givennames
     Provide a path to a list of given names you would like to use. If no list is given the default list provided (given-names.txt) will be used.
@@ -58,32 +58,35 @@
         Created Date: 15.12.2025
         Last Modified Date: 15.12.2025
         Last Modified By: KaijuLogic
-        Repository URL:   https://github.com/KaijuLogic/
+        Repository URL:   https://github.com/KaijuLogic/AD_BulkTestUsers
         Version: 1.0
 
-    --- REQUIREMENTS ---
+    REQUIREMENTS
     * Active Directory PowerShell Module (RSAT)
     * User account with permissions to create AD Users and modify Groups
 
-    --- CHANGE LOG ---
+    CHANGE LOG
     Initial commit
 
+    TO-DO: 
+        - Randomly pick how many security groups a user should be added to
+
     .DISCLAIMER
-    By using this content you agree to the following: This script may be used for legal purposes only. Users take full responsibility
-    for any actions performed using this script. The author accepts no liability for any damage caused by this script.
+    This script is provided for educational and testing purposes only and may be used for legal purposes only. 
+    The user assumes full responsibility for any actions performed using this script. The author accepts no liability for any damage caused to production environments or data.
 #>
 
 ####################### SCRIPT PARAMETERS #######################
 [CmdletBinding(SupportsShouldProcess)]
 Param(
 	[Parameter(Mandatory=$False)]
-	[String]$givennames = "$PSScriptRoot\given-names.txt",
+	[String]$GivenNames = "$PSScriptRoot\given-names.txt",
 
 	[Parameter(Mandatory=$False)]
-	[String]$familynames = "$PSScriptRoot\family-names.txt",
+	[String]$FamilyNames = "$PSScriptRoot\family-names.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$roles = "$PSScriptRoot\roles.txt",
+	[String]$Roles = "$PSScriptRoot\roles.txt",
 
     [Parameter(Mandatory=$False)]
 	[String]$DestinationOUList = "$PSScriptRoot\Dest-OUs.txt",
@@ -195,6 +198,7 @@ Function Get-RandomPassword{
 
 Function Start-BulkUsersCreation{
     [CmdletBinding(SupportsShouldProcess=$True)]
+    param()
     $RandomPassword = get-RandomPassword
     $UserFirstName = $FirstList | Get-Random
     $UserLastName = $LastList | Get-Random
@@ -255,7 +259,7 @@ Set-NewFolder $RunLogDir
 Write-ScriptLog -level INFO -message "Bulk test user creation run by $ENV:UserName on $ENV:ComputerName" -logfile $RunLogOutput
 Write-ScriptLog -level INFO -message "$UserCount random users will be created on this run." -logfile $RunLogOutput
 
-$CheckFiles = $givennames,$familynames,$roles,$DestinationOUList,$DepartmentList
+$CheckFiles = $GivenNames,$FamilyNames,$Roles,$DestinationOUList,$DepartmentList
 
 foreach ($file in $CheckFiles){
     if (-not(Test-Path $file -PathType leaf)){
@@ -266,9 +270,9 @@ foreach ($file in $CheckFiles){
 
 Try{
     Write-Verbose "Reading required files...."
-    $FirstList = Get-Content $givennames -ErrorAction Stop
-    $LastList = Get-Content $familynames -ErrorAction Stop
-    $RolesList = Get-Content $roles -ErrorAction Stop
+    $FirstList = Get-Content $GivenNames -ErrorAction Stop
+    $LastList = Get-Content $FamilyNames -ErrorAction Stop
+    $RolesList = Get-Content $Roles -ErrorAction Stop
     $OUList = Get-Content $DestinationOUList -ErrorAction Stop
     $DepList = Get-Content $DepartmentList -ErrorAction Stop
     $DomainInfo = Get-ADDomain -ErrorAction Stop

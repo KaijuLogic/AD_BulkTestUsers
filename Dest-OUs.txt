@@ -1,4 +1,4 @@
 OU=TestUsers,DC=testnet,DC=lab
-OU=AdelaideBranch,DC=testnet,DC=lab
-OU=MelbourneBranch,DC=testnet,DC=lab
-OU=SydneyBranch,DC=testnet,DC=lab
+OU=TestUsers-branch1,DC=testnet,DC=lab
+OU=TestUsers-branch2,DC=testnet,DC=lab
+OU=TestUsers-branch3,DC=testnet,DC=lab
