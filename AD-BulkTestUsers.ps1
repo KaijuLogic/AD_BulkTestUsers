@@ -68,11 +68,11 @@
     CHANGE LOG
     Initial commit
 
-    TO-DO: 
+    TO-DO:
         - Randomly pick how many security groups a user should be added to
 
     .DISCLAIMER
-    This script is provided for educational and testing purposes only and may be used for legal purposes only. 
+    This script is provided for educational and testing purposes only and may be used for legal purposes only.
     The user assumes full responsibility for any actions performed using this script. The author accepts no liability for any damage caused to production environments or data.
 #>
 
@@ -99,14 +99,12 @@ Param(
 	[Int]$UserCount = 10
 )
 ################################## Import Modules #################################
-
 try{
 	Import-Module ActiveDirectory -ErrorAction Stop
 }
 catch{
 	Throw "Failed to import ActiveDirectory module, are you sure this is running on a system with AD or RSAT tools installed."
 }
-
 #################################### SET COMMON VARIABLES ###################################
 $CurrentDate = Get-Date
 $CurrentPath = split-path -Parent $PSCommandPath
@@ -173,7 +171,7 @@ Function Write-ScriptLog{
 
 Function Get-RandomPassword{
     #Please note that this (using get-random)is not a cryptographically secure way to generate a password.
-    #As mentioned before, please only use this for lab type settings. 
+    #As mentioned before, please only use this for lab type settings.
     param(
         [int]$Length = 16
     )
@@ -208,6 +206,7 @@ Function Start-BulkUsersCreation{
     $DestinationOU = $OUList | Get-Random
     $DisplayName = "$UserFirstName $UserLastName"
 
+    # Increments the user name if there happens to be a repeat.
     $Count = 1
     while (Get-ADUser -Filter "SamAccountName -eq '$UserName'" -ErrorAction SilentlyContinue) {
         Write-ScriptLog -level WARN -Message "User $UserName exists, incrementing ID." -logfile $RunLogOutput
@@ -260,7 +259,7 @@ Write-ScriptLog -level INFO -message "Bulk test user creation run by $ENV:UserNa
 Write-ScriptLog -level INFO -message "$UserCount random users will be created on this run." -logfile $RunLogOutput
 
 $CheckFiles = $GivenNames,$FamilyNames,$Roles,$DestinationOUList,$DepartmentList
-
+#Make sure all resource files can be found
 foreach ($file in $CheckFiles){
     if (-not(Test-Path $file -PathType leaf)){
         Write-ScriptLog -level ERROR -message "$file not found, please verify the path and file exists: $_." -logfile $RunLogOutput
@@ -285,7 +284,6 @@ catch{
 
 
 $UCount = 1
-
 While($UCount -le $UserCount){
     Start-BulkUsersCreation
     $UCount++
