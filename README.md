@@ -9,6 +9,7 @@ This PowerShell script automates the creation of bulk user accounts within an Ac
 * Can easily create up to 100 users in a single run. 
 * Logs are created so you can go back and see which users were created, what role they were given, and what OU they were placed in.
 * Supports -whatif
+* The script will attempt to automatically query your domain information and fill it in where needed (e.g., UserPrincipalName)
 
 ## Prerequisites
 * **Active Directory PowerShell Module** (RSAT) must be installed or this should be run on a server with AD installed.

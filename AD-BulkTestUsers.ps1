@@ -274,6 +274,7 @@ Try{
     $RolesList = Get-Content $Roles -ErrorAction Stop
     $OUList = Get-Content $DestinationOUList -ErrorAction Stop
     $DepList = Get-Content $DepartmentList -ErrorAction Stop
+    #Grab domain information for creating our accounts.
     $DomainInfo = Get-ADDomain -ErrorAction Stop
     Write-Verbose "Files read successfully."
 }
