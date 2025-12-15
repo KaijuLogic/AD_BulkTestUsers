@@ -60,7 +60,7 @@ The script will also generate run logs that you can review later.
 
 * **Location**: `\BulkUsersLogs\RunLogs\YYYY-MM\` within the script directory.
 * **Format**: `BulkUsers_RunLog_YYYY-MM-dd_HH.mm.ss.txt`.
-### LOG Example
+### Log Example
 ```powershell
 2025-12-16 08:33:24 | INFO | [Aditya Gill] created in OU=MelbourneBranch,DC=testnet,DC=lab, with the role IT-Users.
 2025-12-16 08:33:24 | INFO | [Yui Patel] created in OU=AdelaideBranch,DC=testnet,DC=lab, with the role Server Operators.
