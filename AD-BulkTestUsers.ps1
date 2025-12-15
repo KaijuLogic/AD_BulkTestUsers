@@ -9,7 +9,7 @@
 
     Several files are provided:
     - given-names.txt :  A list of 300 given (first) names.
-    - family-names.txt : A list of 300 family (last) names
+    - family-names.txt : A list of 300 family (last) names.
     - roles.txt : A list of existing Security Groups to add users to.
     - Dest-OUs.txt : List of target Distinguished Names for OUs (e.g., OU=TestUsers,DC=testnet,DC=lab).
     - DepartmentList.txt : A list of department names.
@@ -80,19 +80,19 @@
 [CmdletBinding(SupportsShouldProcess)]
 Param(
 	[Parameter(Mandatory=$False)]
-	[String]$GivenNames = "$PSScriptRoot\given-names.txt",
+	[String]$GivenNames = "$PSScriptRoot\Resources\given-names.txt",
 
 	[Parameter(Mandatory=$False)]
-	[String]$FamilyNames = "$PSScriptRoot\family-names.txt",
+	[String]$FamilyNames = "$PSScriptRoot\Resources\family-names.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$Roles = "$PSScriptRoot\roles.txt",
+	[String]$Roles = "$PSScriptRoot\Resources\roles.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$DestinationOUList = "$PSScriptRoot\Dest-OUs.txt",
+	[String]$DestinationOUList = "$PSScriptRoot\Resources\Dest-OUs.txt",
 
     [Parameter(Mandatory=$False)]
-	[String]$DepartmentList = "$PSScriptRoot\DepartmentList.txt",
+	[String]$DepartmentList = "$PSScriptRoot\Resources\DepartmentList.txt",
 
     [Parameter(Mandatory=$false)]
     [ValidateRange(1, 100)]
@@ -202,7 +202,7 @@ Function Start-BulkUsersCreation{
     $RandomPassword = get-RandomPassword
     $UserFirstName = $FirstList | Get-Random
     $UserLastName = $LastList | Get-Random
-    $UserName = $UserFirstName + '.' + $UserLastName
+    $UserName = "$UserFirstName.$UserLastName"
     $UserRole = $RolesList| get-random
     $Department = $DepList | Get-Random
     $DestinationOU = $OUList | Get-Random
