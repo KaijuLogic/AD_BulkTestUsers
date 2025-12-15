@@ -47,3 +47,16 @@ Create 50 users using using custom lists.
 ```powershell
 AD-BulkTestUsers.ps1 -usercount 50 -DestinationOUList C:\Script\Your-OU-List.txt -roles C:\Script\Your-roles-List.txt
 ```
+
+### Logging
+
+The script automatically generates execution logs.
+
+* `Location`: \BulkUsersLogs\RunLogs\YYYY-MM\ within the script directory.
+* `Format`: BulkUsers_RunLog_YYYY-MM-dd_HH.mm.ss.txt.
+
+Logs distinguish between INFO, WARN, and ERROR levels to assist with troubleshooting failed account creations or duplicate user handling.
+
+### Disclaimer
+
+This script is provided for educational and testing purposes only. The user assumes full responsibility for any actions performed using this script. The author accepts no liability for any damage caused to production environments or data.
