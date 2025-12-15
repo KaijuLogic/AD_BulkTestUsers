@@ -1,4 +1,3 @@
-Administrators
 Server Operators
 Backup Operators
 Account Operators
