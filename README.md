@@ -18,15 +18,15 @@ The script is bundled with several text files to generate random user data. By d
 * `Dest-OUs.txt`: List of target Distinguished Names for OUs (e.g., OU=TestUsers,DC=testnet,DC=lab).
 * `DepartmentList.txt`: A list of department names.
 
-You may provide custom paths to these files using script parameters if they are not located in the script root.
+You can also provide custom paths to these files using script parameters if they are not located in the script root directory.
 
 ## Usage
 
 ### Parameters
 * `-UserCount` (Integer): The number of users to create (Default: 10, Range: 1-100).
-* `-givennames` (String): Path to the given names file.
-* `-familynames` (String): Path to the family names file.
-* `-roles` (String): Path to the roles/groups file.
+* `-GivenNames` (String): Path to the given names file.
+* `-FamilyNames` (String): Path to the family names file.
+* `-Roles` (String): Path to the roles/groups file.
 * `-DestinationOUList` (String): Path to the OU list file.
 * `-DepartmentList` (String): Path to the department list file.
 
@@ -50,12 +50,10 @@ AD-BulkTestUsers.ps1 -usercount 50 -DestinationOUList C:\Script\Your-OU-List.txt
 
 ### Logging
 
-The script automatically generates execution logs.
+The script will also generate run logs that you can review later.
 
-* `Location`: \BulkUsersLogs\RunLogs\YYYY-MM\ within the script directory.
-* `Format`: BulkUsers_RunLog_YYYY-MM-dd_HH.mm.ss.txt.
-
-Logs distinguish between INFO, WARN, and ERROR levels to assist with troubleshooting failed account creations or duplicate user handling.
+* `Location`: `\BulkUsersLogs\RunLogs\YYYY-MM\` within the script directory.
+* `Format`: `BulkUsers_RunLog_YYYY-MM-dd_HH.mm.ss.txt`.
 
 ## Disclaimer
 
