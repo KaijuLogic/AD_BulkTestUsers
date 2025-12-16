@@ -59,7 +59,6 @@
         Last Modified Date: 15.12.2025
         Last Modified By: KaijuLogic
         Repository URL:   https://github.com/KaijuLogic/AD_BulkTestUsers
-        Version: 1.0
 
     REQUIREMENTS
     * Active Directory PowerShell Module (RSAT)
