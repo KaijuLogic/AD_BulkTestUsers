@@ -93,6 +93,9 @@ Param(
     [Parameter(Mandatory=$False)]
 	[String]$DepartmentList = ".\Resources\DepartmentList.txt",
 
+    [Parameter(Mandatory=$False)]
+	[String]$Domaininfo,
+
     [Parameter(Mandatory=$false)]
     [ValidateRange(1, 100)]
 	[Int]$UserCount = 10
@@ -217,7 +220,7 @@ Function Start-BulkUsersCreation{
 
     $UserParams = @{
         SamAccountName = $UserName
-        UserPrincipalName = "$UserName@$($DomainInfo.DNSRoot)"
+        UserPrincipalName = "$UserName@$($DomainInfo)"
         Name = $DisplayName
         GivenName = $UserFirstName
         Surname = $UserLastName
@@ -266,6 +269,20 @@ foreach ($file in $CheckFiles){
     }
 }
 
+#If the user does not provide custom domain/upn information then attempt to automnatically grab it.
+if(-not($DomainInfo)){
+    try{
+        $DomainInfo = $(Get-ADDomain -ErrorAction Stop).DNSRoot
+        Write-ScriptLog -level INFO -message "Domain information gathered automatically, using: $DomainInfo" -logfile $RunLogOutput
+    }
+    catch{
+        Write-ScriptLog -level ERROR -message "Could not gather domain information: $_" -logfile $RunLogOutput
+    }
+}
+else {
+    Write-ScriptLog -level WARN -message "Custom domain info provided : $DomainInfo" -logfile $RunLogOutput
+}
+
 Try{
     Write-Verbose "Reading required files...."
     $FirstList = Get-Content $GivenNames -ErrorAction Stop
@@ -274,7 +291,7 @@ Try{
     $OUList = Get-Content $DestinationOUList -ErrorAction Stop
     $DepList = Get-Content $DepartmentList -ErrorAction Stop
     #Grab domain information for creating our accounts.
-    $DomainInfo = Get-ADDomain -ErrorAction Stop
+    
     Write-Verbose "Files read successfully."
 }
 catch{

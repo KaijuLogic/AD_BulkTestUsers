@@ -35,6 +35,7 @@ You can also provide custom paths to these files using script parameters if they
 * `-Roles` (String): Path to the roles/groups file.
 * `-DestinationOUList` (String): Path to the OU list file.
 * `-DepartmentList` (String): Path to the department list file.
+* `-DomainInfo` (String):Provide specific domain information
 
 ### Examples
 
@@ -53,6 +54,13 @@ Create 50 users using using custom lists.
 ```powershell
 AD-BulkTestUsers.ps1 -usercount 50 -DestinationOUList C:\Script\Your-OU-List.txt -roles C:\Script\Your-roles-List.txt
 ```
+
+**Use different source files**
+ Create 75 users total using custom domain information. 
+```powershell
+AD-BulkTestUsers.ps1 -usercount 75 -domaininfo ad.kaijulogic.org
+```
+
 
 ## Logging
 
